@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
+  <script src="https://opensource.keycdn.com/angularjs/1.5.8/angular.min.js"></script>
+  <script src="script.js"></script>
+</head>
+
+<body ng-app="app" ng-controller="demo as $ctrl">
+    <label>Simple Mode<input type="checkbox" ng-model="$ctrl.simple"/></label>
+  <h1>Flex Playground</h1>
+<style ng-bind="$ctrl.style"></style>
+<h3>Custom Styles:</h3>
+<textarea ng-model="$ctrl.style"></textarea>
+<br/> 
+
+  <label>Container Type</label>
+  <select ng-model="$ctrl.class">
+    <option value="normal">Not Flex</option>
+    <option value="layout-row">Flex Layout Row</option>
+    <option value="layout-column">Flex Layout Column</option>
+  </select>
+  <label>width: </label>
+  <input type="text" ng-model="$ctrl.width" />
+  <label>height: </label>
+  <input type="text" ng-model="$ctrl.height" />
+  <label>
+    <input ng-model="$ctrl.wrap" type="checkbox" value="wrap" /> Wrap </label>
+  <br/>
+    <br/>
+  <fieldset>
+  <legend>How To Distribute space?</legend>
+  <label>Justify Content (main axis)</label>
+  <select ng-model="$ctrl.justify">
+    <option value="flex-start">flex-start (default)</option>
+    <option value="center">center</option>
+    <option value="flex-end">flex-end</option>
+    <option value="space-around">space-around</option>
+    <option value="space-between">space-between</option>
+  </select>
+  (space of each line in main axis)
+  <br/>
+  <label>Align Items (cross axis)</label>
+  <select ng-model="$ctrl.alignItems">
+    <option value="stretch">stretch (default)</option>
+    <option value="flex-start">flex-start</option>
+    <option value="baseline">baseline</option>
+    <option value="center">center</option>
+    <option value="flex-end">flex-end</option>
+  </select>
+      (what to do with space within each line in cross axis?)
+  <br/>
+  <label>Align Content (cross axis)</label>
+  <select ng-model="$ctrl.alignContent">
+    <option value="stretch">stretch (default)</option>
+    <option value="flex-start">flex-start</option>
+    <option value="flex-end">flex-end</option>
+    <option value="center">center</option>
+    <option value="space-around">space-around</option>
+    <option value="space-between">space-between</option>
+  </select>
+      (how to place the lines within the remaing space on cross axis? <b>multi-line flex containers only</b>
+  <br/>
+  </fieldset>
+  <fieldset>
+      <legend>Anwsers</legend>
+      <h3 ng-click="$ctrl.expandJustify=!$ctrl.expandJustify">Justify Content - main axis space</h3>
+      <p ng-show="$ctrl.expandJustify">{{$ctrl.anwsers.justify[$ctrl.justify]}}</p>
+       <h3 ng-click="$ctrl.expandAlignItems=!$ctrl.expandAlignItems">Align Items - space within corss axis</h3>
+      <p ng-show="$ctrl.expandAlignItems">{{$ctrl.anwsers.alignItems[$ctrl.alignItems]}}</p>
+      <h3 ng-click="$ctrl.expandAlignContent=!$ctrl.expandAlignContent">Align Content - how to place the lines in cross axis </h3>
+      <p ng-show="$ctrl.expandAlignContent">{{$ctrl.anwsers.alignContent[$ctrl.alignContent]}}</p>
+  </fieldset>
+  <button type="button" ng-click="$ctrl.navitems.push({})">Add Item</button>
+    <button type="button" ng-click="$ctrl.navitems.push({small: true })" ng-if="!$ctrl.simple">Add Small Item</button>
+
+  <div ng-class="[$ctrl.class, { wrap: $ctrl.wrap}]" class="contanier" ng-style="{ width: $ctrl.width, height: $ctrl.height, 'justify-content': $ctrl.justify, 'align-items': $ctrl.alignItems, 'align-content': $ctrl.alignContent}">
+    <div class="menu-item" ng-repeat="item in $ctrl.navitems" ng-style="item" ng-click="$ctrl.simple ? $ctrl.remove($index) : return;">
+      Nav Item {{$index}}
+      <span ng-if="!$ctrl.simple" class="close-btn" ng-click="$ctrl.remove($index)">X</span>
+      <div ng-if="!$ctrl.simple" class="actions">
+        <ul>
+          <li  ng-if="!item.small">Flex Grow:
+            <input type="number" min="0" max="10" ng-model="item['flex-grow']" />
+          </li>
+          <li  ng-if="!item.small">Flex Shrink:
+            <input type="number" min="0" max="10" ng-model="item['flex-shrink']" />
+          </li>
+          <li  ng-if="!item.small">Flex Basis:
+            <input type="text" ng-model="item['flex-basis']" />
+          </li>
+           <li ng-if="$ctrl.class != 'layout-column'">Height:
+            <input type="text" ng-model="item['height']" />
+          </li>
+          <li ng-if="$ctrl.class != 'layout-row'">Width:
+            <input type="text" ng-model="item['width']" />
+          </li>
+          <li  ng-if="!item.small">Overflow:
+           <select ng-model="item.overflow">
+             <option value="visible"> visible </option>
+              <option value="hidden"> hidden </option>
+              <option value="auto"> auto </option>
+           </select>
+          </li>
+          <li  ng-if="!item.small">Order:
+            <input type="number" min="-99" max="99" ng-model="item.order" />
+          </li>
+          <li>Align-self:
+            <select ng-model="item['align-self']">
+              <option value="auto">auto</option>
+              <option value="baseline">baseline</option>
+              <option value="center">center</option>
+              <option value="flex-end">flex-end</option>
+              <option value="flex-start">flex-start</option>
+              <option value="stretch">stretch</option>
+            </select>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

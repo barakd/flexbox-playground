@@ -1,0 +1,84 @@
+.contanier{
+  margin-top: 25px;
+  border: 1px solid;
+  position: relative;
+}
+
+.layout-row, .layout-column{
+  margin-left: 25px;
+  display: flex;
+}
+
+
+
+.layout-column{
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-item{
+  padding: 10px;
+  border: 1px solid black;
+  background-color: deepskyblue;
+  position: relative;
+}
+
+.close-btn{
+  position: absolute;
+  right: 0;
+  margin-right: 5px;
+}
+
+.wrap{
+  flex-wrap: wrap;
+}
+
+/** axiss painings */
+.layout-row::after, .layout-column::after{
+    display: block;
+    position: absolute;
+    color: red;
+    width: 100%;
+    height: 1px;
+    bottom: -10px;
+    border-bottom: 2px dashed red;
+}
+
+.layout-row::before,.layout-column::before{
+    display: block;
+    position: absolute;
+    word-wrap: break-word;
+    padding: 4px;
+    color: red;
+    width: 1px;
+    height: 100%;
+    top: 0;
+    padding-right: 10px;
+    left: -25px;
+    border-right: 2px dashed red;
+}
+
+
+.layout-row::after{
+        content: 'main';
+}
+
+.layout-column::after{
+        content: 'cross';
+}
+
+
+.layout-row::before{
+      content: 'cross';
+}
+
+.layout-column::before{
+      content: 'main';
+}
+
+
+/* .menu-item:nth-child(2n){
+background-color: yellow;
+height: 50px;
+overflow: auto;
+} */
